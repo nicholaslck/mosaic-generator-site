@@ -1,30 +1,60 @@
-<script>
-	export let name;
+<script lang="ts">
+	let inputImages: string[] = [];
+	let patternImage: string = "";
+
+	function onSelectImageFromDiskClick() {
+		inputImages = [
+			"/test/img/blue.png",
+			"/test/img/green.png",
+			"/test/img/red.png",
+		];
+	}
+	function onSelectPatternFromDiskClick() {
+		patternImage = "/test/img/rgb-1.png";
+	}
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<div>
+		<button on:click={onSelectImageFromDiskClick}>Select Images from disk</button>
+		<button on:click={onSelectPatternFromDiskClick}>Select Pattern from disk</button>
+	</div>
+	<canvas id="main-canvas" />
+	<h2>Debug Corner</h2>
+	<div class="debug-info">
+		<div class="debug-image-sources-list">
+			<h3>Input Images:</h3>
+			<ol>
+				{#each inputImages as inputImage}
+					<li>{inputImage}
+						<img src={inputImage} alt="">
+					</li>
+				{/each}
+			</ol>
+		</div>
+		<div class="debug-image-sources-list">
+			<h3>Pattern Image:</h3>
+			<p>{patternImage}</p>
+			<img class="pattern-img" src={patternImage} alt="">
+		</div>
+	</div>
 </main>
 
 <style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
+	#main-canvas {
+		border: 1px solid #000;
 	}
-
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
+	.debug-info {
+		display: flex;
 	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
+	.debug-image-sources-list {
+		width: 50vw;
+	}
+	.debug-image-sources-list img {
+		max-width: 100px;
+	}
+	.debug-image-sources-list .pattern-img {
+		width: 100%;
+		max-width: none;
 	}
 </style>

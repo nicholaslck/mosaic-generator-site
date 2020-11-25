@@ -10,8 +10,23 @@ export interface Position {
 	y: number
 }
 
-export interface Tile {
+export class Tile {
 	image: Image
 	size: Size
 	position: Position
+
+	static createFromImage(image: Image): Tile {
+		image.width
+		return {
+			image,
+			size: {
+				width: image.width,
+				height: image.height
+			},
+			position: {
+				x: 0,
+				y: 0
+			}
+		}
+	}
 }

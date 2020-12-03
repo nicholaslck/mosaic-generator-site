@@ -55,6 +55,9 @@
 </script>
 
 <style>
+	.size-range {
+		display: flex;
+	}
 	.canvas {
 		border: 1px solid #000;
 	}
@@ -86,26 +89,50 @@
 			bind:files={patternImageFile}
 			id="patternImageUpload"
 			multiple={false} />
+		<div class="size-range">
+			<div>
+				<label for="cols">Columns</label>
+				<input
+					id="cols"
+					type="number"
+					bind:value={cols}
+					min="0"
+					max="80" />
+				<input type="range" bind:value={cols} min="0" max="80" />
+			</div>
+			<div>
+				<label for="rows"> Rows</label>
+				<input
+					id="rows"
+					type="number"
+					bind:value={rows}
+					min="0"
+					max="80" />
+				<input type="range" bind:value={rows} min="0" max="80" />
+			</div>
+		</div>
 		<div><button on:click={mosaic}>Go</button></div>
 	</div>
 	<canvas bind:this={canvas} class="canvas" />
-	<h2>Debug Corner</h2>
-	<div class="debug-info">
-		<div class="debug-image-sources-list">
-			<h3>Input Images:</h3>
-			<ol>
-				{#each inputImages as inputImage}
-					<li>
-						<p>{inputImage}</p>
-						<img src={inputImage} alt="" />
-					</li>
-				{/each}
-			</ol>
-		</div>
-		<div class="debug-image-sources-list">
-			<h3>Pattern Image:</h3>
-			<p>{patternImage}</p>
-			<img class="pattern-img" src={patternImage} alt="" />
+	<div>
+		<h2>Debug Corner</h2>
+		<div class="debug-info">
+			<div class="debug-image-sources-list">
+				<h3>Input Images:</h3>
+				<ol>
+					{#each inputImages as inputImage}
+						<li>
+							<p>{inputImage}</p>
+							<img src={inputImage} alt="" />
+						</li>
+					{/each}
+				</ol>
+			</div>
+			<div class="debug-image-sources-list">
+				<h3>Pattern Image:</h3>
+				<p>{patternImage}</p>
+				<img class="pattern-img" src={patternImage} alt="" />
+			</div>
 		</div>
 	</div>
 </main>

@@ -56,11 +56,12 @@ export class Mosaic {
 		console.debug(`canvas size: (${canvas.width}, ${canvas.height}`)
 
 		const ctx = canvas.getContext("2d")
+		ctx.drawImage(this.patternImage.getCanvas(), 0, 0)
 
 		for (let row = 0; row < this.rows; row++) {
-			console.debug(`%cloop: processing row: ${row}`, "color: pink")
+			// console.debug(`%cloop: processing row: ${row}`, "color: pink")
 			for (let col = 0; col < this.cols; col++) {
-				console.log(`%cloop: processing col: ${col}`, "color: red;")
+				// console.log(`%cloop: processing col: ${col}`, "color: red;")
 
 				const x = tileWidth * col
 				const y = tileHeight * row
@@ -103,6 +104,7 @@ export class Mosaic {
 		for (let i=0; i < meansA.length; i++) {
 			distanceInChannel.push(Math.abs(meansA[i] - meansB[i]))
 		}
+
 		const distance = Math.sqrt(distanceInChannel.reduce((a,c) => (a + c*c)))
 		return distance
 	}

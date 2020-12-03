@@ -4,6 +4,8 @@
 	let inputImages: string[] = [];
 	let patternImage: string = "";
 
+	let canvas: HTMLCanvasElement;
+
 	function onSelectImageFromDiskClick() {
 		inputImages = [
 			"/test/img/blue.png",
@@ -25,11 +27,11 @@
 		console.debug(ijsPatternImage)
 
 		const mosaic = new Mosaic()
-		mosaic.inputImages= ijsInputImages
+		mosaic.inputImages = ijsInputImages
 		mosaic.patternImage = ijsPatternImage
 
-		mosaic.cols = 6
-		mosaic.rows = 9
+		mosaic.setSize(20, 10)
+		mosaic.drawOnCanvas(canvas)
 	}
 
 	$: if (inputImages.length > 0 && patternImage) {
@@ -38,7 +40,7 @@
 </script>
 
 <style>
-	#main-canvas {
+	.canvas {
 		border: 1px solid #000;
 	}
 	.debug-info {
@@ -61,7 +63,7 @@
 		<button on:click={onSelectImageFromDiskClick}>Select Images from disk</button>
 		<button on:click={onSelectPatternFromDiskClick}>Select Pattern from disk</button>
 	</div>
-	<canvas id="main-canvas" />
+	<canvas bind:this={canvas} class="canvas" />
 	<h2>Debug Corner</h2>
 	<div class="debug-info">
 		<div class="debug-image-sources-list">

@@ -6,6 +6,8 @@
 	let patternImage: string = "";
 	let cols: number = 30;
 	let rows: number = 20;
+	let width: number = 480;
+	let height: number = 360;
 
 	let canvas: HTMLCanvasElement;
 
@@ -111,9 +113,31 @@
 				<input type="range" bind:value={rows} min="0" max="80" />
 			</div>
 		</div>
+		<div class="size-range">
+			<div>
+				<label for="width">Width</label>
+				<input
+					id="width"
+					type="number"
+					bind:value={width}
+					min="100"
+					max="1920" />
+				<input type="range" bind:value={width} min="100" max="1920" />
+			</div>
+			<div>
+				<label for="height"> Height</label>
+				<input
+					id="height"
+					type="number"
+					bind:value={height}
+					min="100"
+					max="1920" />
+				<input type="range" bind:value={height} min="100" max="1920" />
+			</div>
+		</div>
 		<div><button on:click={mosaic}>Go</button></div>
 	</div>
-	<canvas bind:this={canvas} class="canvas" />
+	<canvas bind:this={canvas} class="canvas" {width} {height} />
 	<div>
 		<h2>Debug Corner</h2>
 		<div class="debug-info">

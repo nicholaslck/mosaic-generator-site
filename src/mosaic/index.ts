@@ -17,9 +17,11 @@ export class Mosaic {
 	}
 	set patternImage(images: Image) {
 		this._patternImage = images
+		this._resizedPatternImage = null;
 	}
 
 	private _candidateImage: Image[] = []
+	private _resizedPatternImage: Image;
 
 	public cols: number = 1
 	public rows: number = 1
@@ -42,8 +44,14 @@ export class Mosaic {
 			this.rows = 1
 		}
 
-		const tileWidth = this._patternImage.width / Math.floor(this.cols)
-		const tileHeight = this._patternImage.height / Math.floor(this.rows)
+		console.debug(`canvas size: (${canvas.width}, ${canvas.height}`)
+		this._resizedPatternImage = this._patternImage.resize({
+			width: canvas.width,
+			height: canvas.height
+		})
+
+		const tileWidth = this._resizedPatternImage.width / Math.floor(this.cols)
+		const tileHeight = this._resizedPatternImage.height / Math.floor(this.rows)
 		console.debug(`max tile size: (${tileWidth}, ${tileHeight})`)
 
 		this._candidateImage = this._inputImages.map(image => image.resize({
@@ -51,12 +59,8 @@ export class Mosaic {
 			height: tileHeight
 		}))
 
-		canvas.width = this._patternImage.width
-		canvas.height = this._patternImage.height
-		console.debug(`canvas size: (${canvas.width}, ${canvas.height}`)
-
 		const ctx = canvas.getContext("2d")
-		ctx.drawImage(this.patternImage.getCanvas(), 0, 0)
+		// ctx.drawImage(this._resizedPatternImage.getCanvas(), 0, 0)
 
 		for (let row = 0; row < this.rows; row++) {
 			// console.debug(`%cloop: processing row: ${row}`, "color: pink")
@@ -65,11 +69,11 @@ export class Mosaic {
 
 				const x = tileWidth * col
 				const y = tileHeight * row
-				const patternSample = this._patternImage.crop({
+				const patternSample = this._resizedPatternImage.crop({
 					x: x,
 					y: y,
 					width: tileWidth,
-					height: tileHeight
+					height: tileWidth
 				})
 
 				const meansOfSample = this.getMeansFromImage(patternSample)
